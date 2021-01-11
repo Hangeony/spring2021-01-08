@@ -1,17 +1,25 @@
 package org.zerock.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
+import org.zerock.domain.TodoDTO;
 
+import javafx.scene.chart.PieChart.Data;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 
@@ -76,5 +84,40 @@ public class SampleController {
 		
 		return "ex02Bean";
 	}
+//	@InitBinder
+//	public void initBinder(WebDataBinder binder) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		binder.registerCustomEditor(Data.class, new CustomDateEditor(dateFormat, false));
+//	}
+		
+//	137p
+//	/sample/ex03?title=test&dueData=2021-01-11
+//	/sample/ex03?title=test&dueData=2021/01/11
+	 @GetMapping("/ex03")
+	 public String ex03(TodoDTO todto) {
+		 log.info("todo : " + todto);
+		 return "ex03";
+	 }
+	 
+	 //140P
+//	 /sample/ex04?name=java&age=100&page=55
+	 @GetMapping("/ex04")
+	 public String ex04(SampleDTO dto,@ModelAttribute("page") int page) {
+		 
+		 log.info("dto : " + dto);
+		 log.info("page : " + page);
+		 
+		 return "/sample/ex04";
+	 }
+	 
+	 //146~147p
+	 @GetMapping("/ex06")
+	 public @ResponseBody SampleDTO ex06() {
+		 SampleDTO dto = new SampleDTO();
+		 dto.setAge(10);
+		 dto.setName("홍길동");
+		 
+		 return dto;
+	 }
 
 }
